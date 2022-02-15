@@ -1,8 +1,7 @@
 # 1. check flash drive with f3
 https://fight-flash-fraud.readthedocs.io/en/stable/introduction.html#examples
 
-	./f3write /media/michel/5EBD-5C80/
-	/Volumes
+	./f3write /media/<username>/<diskname>
 	
 # 2. format and partion microSD and NVME "Linux root (ARM 64)"
 ## Format microSD
