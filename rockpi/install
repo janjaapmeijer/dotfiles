@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+./env
+
+cd cloud
+mv dotenv .env
+sudo docker-compose -f docker-compose.yml up -d

@@ -1,0 +1,12 @@
+sudo su
+
+apk add pure-maps
+apk add telegram-desktop
+apk add gnome-weather
+
+apk add flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub io.freetubeapp.FreeTube
+
+flatpak install --user https://dl.flathub.org/repo/appstream/org.opencpn.OpenCPN.flatpakref
+

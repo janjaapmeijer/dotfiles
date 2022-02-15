@@ -1,0 +1,61 @@
+version: '3.6'
+services:
+    duckdns:
+        image: linuxserver/duckdns
+        container_name: duckdns
+        environment:
+            - 'PUID=${PUID}'
+            - 'PGID=${PGID}'
+            - 'TZ=${TZ}'
+            - 'SUBDOMAINS=${DOMAINNAME}'
+            - 'TOKEN=${DUCKDNS_TOKEN}'
+            - LOG_FILE=true
+        network_mode: host
+        volumes:
+            - '${CONFIG_PATH}/DuckDns:/config'
+        restart: unless-stopped
+
+    nginx-proxy-manager:
+      image: 'jc21/nginx-proxy-manager:latest'
+      container_name: "nginx-proxy-manager"
+      restart: unless-stopped
+      ports:
+          - '80:80' #HTTP Traffic
+          - '81:81' #Dashboard Port
+          - '443:443' #HTTPS Traffic
+      environment:
+          - DISABLE_IPV6=true
+          - 'PUID=${PUID}'
+          - 'PGID=${PGID}'
+      volumes:
+          - ${CONFIG_PATH}/NginxProxyManager/config.json:/app/config/production.json
+          - ${CONFIG_PATH}/letsencrypt:/etc/letsencrypt
+          - ${CONFIG_PATH}/nginx-proxy-manager:/data
+      links:
+          - mariadb
+      networks:
+            - web
+
+    mariadb:
+       image: jsurf/rpi-mariadb:latest
+       container_name: mariadb
+       hostname: mariadb
+       volumes:
+            - ${CONFIG_PATH}/mysql:/var/lib/mysql
+       networks: 
+            - web
+       ports:
+            - 3306:3306    
+       restart: unless-stopped
+       environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - PUID=${PUID}
+            - PGID=${PGID}
+            - TZ=${TZ}
+
+networks:
+    web:
+        name: web

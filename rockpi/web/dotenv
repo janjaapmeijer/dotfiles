@@ -1,0 +1,11 @@
+PUID=$PUID_USER
+PGID=$PGID_USER
+TZ=$TZ
+CONFIG_PATH=/data/config
+DATA_PATH=/data/appdata
+MYSQL_ROOT_PASSWORD=<strong password advised>
+MYSQL_DATABASE=nginxdb
+MYSQL_USER=nginxdbuser
+MYSQL_PASSWORD=<strong password advised>
+DOMAINNAME=<your duckdns domain, including ".duckdns.org">
+DUCKDNS_TOKEN=<your duckdns auth token>
