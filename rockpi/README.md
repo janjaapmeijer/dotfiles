@@ -134,3 +134,6 @@ https://medium.com/@ptofanelli/raspberry-pi-creating-a-home-media-server-767e169
 
 # 11. Docker Compose
 https://github.com/aaaldo/docker-compose-omv5-armhf
+
+# 12. Store docker passwords
+https://fcivaner.medium.com/how-to-store-your-aws-cli-credentials-on-keepassxc-5429dee1656d
