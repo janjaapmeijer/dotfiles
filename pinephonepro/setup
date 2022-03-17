@@ -1,7 +1,15 @@
+#!/bin/ash
 sudo su
 
-apk add pure-maps
+# https://wiki.postmarketos.org/index.php?title=Telegram_Desktop&mobileaction=toggle_view_mobile
 apk add telegram-desktop
+telegram-desktop -scale 80
+echo "#!/bin/ash" >> ~/.local/bin/telegram-desktop-wayland
+echo "QT_QPA_PLATFORM=wayland telegram-desktop" >> ~/.local/bin/telegram-desktop-wayland
+chmod +x ~/.local/bin/telegram-desktop-wayland
+cp /usr/share/applications/telegram-desktop.desktop ~/.local/share/applications/
+gedit ~/.local/share/applications/telegram-desktop.desktop
+# Exec=telegram-desktop -scale 80 -- %u
 apk add gnome-weather
 
 apk add flatpak
