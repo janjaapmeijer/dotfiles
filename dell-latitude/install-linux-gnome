@@ -1,0 +1,67 @@
+#!bin/bash
+
+# install gnome desktop
+sudo apt update && sudo apt upgrade -y
+sudo apt install gnome-session gdm3 -y
+sudo apt update && sudo apt upgrade -y
+sudo reboot
+
+### INSTALL UTILITIES
+sudo apt-get install software-properties-common apt-transport-https wget
+sudo apt install openssh-server
+sudo apt-get install vpnc network-manager-vpnc network-manager-vpnc-gnome
+sudo apt-get install ppa-purge
+
+# openplotter
+# sudo apt install python3-wxgtk4.0 python3-ujson python3-pyudev whois vlc
+
+# battery management
+sudo add-apt-repository ppa:linrunner/tlp
+sudo apt update
+sudo apt install tlp tlp-rdw
+sudo tlp start
+
+### SETTINGS
+
+# SSH
+sudo ufw allow 22
+# cat ~/.ssh/id_rsa.pub | ssh gadi "mkdir -p ~/.ssh/; cat >> ~/.ssh/authorized_keys"
+
+# echo ENV='HELLO' >> ~/.ssh/known_hosts
+
+# VPN
+
+### INSTALL APPLICATIONS
+# install double commander
+sudo apt-get install doublecmd-gtk
+
+# install zotero
+wget -qO- https://zotero.retorque.re/file/apt-package-archive/install.sh | sudo bash
+sudo apt update
+sudo apt install zotero
+
+# install keepassxc
+sudo apt install keepassxc
+
+# install drop down terminal guake
+sudo apt-get install guake
+
+# install music player clementine
+sudo apt install clementine
+
+# install opencpn
+# sudo add-apt-repository ppa:opencpn/opencpn
+# sudo apt update
+# sudo apt-get install opencpn
+
+# install xygrib
+# sudo apt install xygrib
+
+# install atom
+sudo apt-get update
+wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main"
+sudo apt update
+sudo apt install atom
+
+
