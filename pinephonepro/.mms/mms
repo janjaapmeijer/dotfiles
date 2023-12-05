@@ -1,0 +1,15 @@
+[Modem Manager]
+CarrierMMSC=http://mmsc.optus.com.au:8002/
+MMS_APN=MMS
+CarrierMMSProxy=61.88.190.10:8070
+DefaultModemNumber=NULL
+AutoProcessOnConnection=true
+AutoProcessSMSWAP=true
+IMSI=505024602155612
+
+[Settings]
+UseDeliveryReports=false
+TotalMaxAttachmentSize=1100000
+MaxAttachments=25
+AutoCreateSMIL=true
+ForceCAres=false
