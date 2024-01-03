@@ -1,20 +1,105 @@
 #!/bin/ash
 sudo su
 
+# move backup files
+mkdir ~/.mms
+mv ~/checkouts/dotfiles/pinephonepro/mms ~/.mms
+
+### HARDWARE
+
+# modem setup
+#mmcli -e -m any
+#sudo mmcli -m 0 --messaging-list-sms
+#sudo mmcli -m 0 --messaging-list-mms
+#mmcli -m 1 --modem -r
+
+# keyboard setup
+# https://xnux.eu/pinephone-keyboard/faq.html
+#ppkb-i2c-charger-ctl info
+#ppkb-i2c-inputd
+
+# gps setup
+#mmcli -m 0 --location-enable-gps-raw --location-enable-gps-nmea
+#watch mmcli -m 0 --location-get
+#mmcli -m 0 --location-status
+
+### UTILITIES
+apk add powersupply
+apk add flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+### APPLICATIONS
+
+# install telegram
 # https://wiki.postmarketos.org/index.php?title=Telegram_Desktop&mobileaction=toggle_view_mobile
 apk add telegram-desktop
-telegram-desktop -scale 80
 echo "#!/bin/ash" >> ~/.local/bin/telegram-desktop-wayland
 echo "QT_QPA_PLATFORM=wayland telegram-desktop" >> ~/.local/bin/telegram-desktop-wayland
 chmod +x ~/.local/bin/telegram-desktop-wayland
 cp /usr/share/applications/telegram-desktop.desktop ~/.local/share/applications/
-gedit ~/.local/share/applications/telegram-desktop.desktop
+# gedit ~/.local/share/applications/telegram-desktop.desktop
 # Exec=telegram-desktop -scale 80 -- %u
+
+# install surf and weather apps
 apk add gnome-weather
 
-apk add flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+# install navigation
+# apk add gnome-maps
+apk add pure-maps
+
+# install foss youtube
 flatpak install flathub io.freetubeapp.FreeTube
+flatpak override --user --env=GDK_BACKEND=x11 io.freetubeapp.FreeTube
 
-flatpak install --user https://dl.flathub.org/repo/appstream/org.opencpn.OpenCPN.flatpakref
+# install marine and navigation apps
+#flatpak install --user https://dl.flathub.org/repo/appstream/org.opencpn.OpenCPN.flatpakref
+# flatpak run org.opencpn.OpenCPN
+# apk add tigervnc
 
+# install keepassxc
+apk add keepassxc
+# scale app
+# https://linmob.net/pinephone-setup-scaling-in-phosh/
+# sudo vi ~/.local/bin/get-app-id.sh
+# #!/bin/bash
+# WAYLAND_DEBUG=1 $1 |& grep 'xdg_toplevel@[0-9]\+\.set_app_id'
+# Esc, :w, :q
+# chmod +x ~/.local/bin/get-app-id.sh
+# ./get-app-id.sh keepassxc
+# scale-to-fit org.keepassxc.KeePassXC on
+## Make accessible folder for Waydroid and Phosh
+# mkdir ~/backup
+# mkdir ~/backup/keepassxc
+# mkdir ~/.local/share/waydroid/data/media/0/backup
+# mkdir ~/.local/share/waydroid/data/media/0/backup/keepassxc
+# mount --bind ~/backup/keepassxc/ ~/.local/share/waydroid/data/media/0/backup/keepassxc
+
+### WAYDROID
+
+# Remove WAYDROID
+# waydroid session stop
+# sudo waydroid container stop
+# sudo apk del waydroid
+# reboot
+# sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid ~/.share/waydroid ~/.local/share/applications/*aydroid* ~/.local/share/waydroid
+
+apk add waydroid
+
+rc-update add cgroups default # optional
+rc-service cgroups start
+apk add iptables dnsmasq
+
+waydroid init
+rc-service waydroid-container start
+rc-update add waydroid-container default
+
+waydroid session start
+waydroid status
+# waydroid container unfreeze
+
+## Clean up desktop apps in Phosh
+# ls ~/.local/share/applications/*.desktop
+# vi x.Desktop
+# add NoDisplay=true
+
+waydroid app install F-Droid.apk

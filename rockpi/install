@@ -1,8 +1,12 @@
 #!/bin/bash
 
+sudo su
+
 set -e
 
 ./env
+
+apt-get install libsecret-tools
 
 cd cloud
 mv dotenv .env
