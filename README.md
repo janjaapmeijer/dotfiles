@@ -11,20 +11,20 @@ Upon fresh installation, the [`run_once_install-packages.sh`](run_once_install-p
 However, to have a bit more control over the configuration of your OS, you can also do it step by step and check if this is what you like.
 
 First, we have to install the dotfiles manager `chezmoi` on your new to configure machine with:
+
 `$ sh -c "$(wget -qO- get.chezmoi.io)"`
 
 To initialise the dotfiles we can checkout this repo to the your local machine with:
 
 `$ chezmoi init https://github.com/janjaapmeijer/dotfiles.git`
 
-To see what will be changed:
-`$ chezmoi diff`
+To see what will be changed, run `$ chezmoi diff`.
 
-If you agree these changes you can first do a dry-run,
+If you agree to these changes you can first do a dry-run, with
+
 `$ chezmoi apply --dry-run --verbose`
 
-and then eventually,
-`$ chezmoi apply`.
+and then eventually, `$ chezmoi apply`.
 
 
 add dconf.ini to .chezmoiignore
