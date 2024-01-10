@@ -1,0 +1,5 @@
+[user]
+	email = janjaap.meijer@utas.edu.au
+	name = Jan Jaap Meijer
+[credential]
+	helper = cache --timeout=86400
