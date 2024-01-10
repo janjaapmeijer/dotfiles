@@ -13,6 +13,8 @@ However, to have a bit more control over the configuration of your OS, you can a
 First, we have to install the dotfiles manager `chezmoi` on your new to configure machine with:
 
 `$ sh -c "$(wget -qO- get.chezmoi.io/lb)"`
+`$ echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile`
+`$ source ~/.bash_profile`
 
 To initialise the dotfiles we can checkout this repo to the your local machine with:
 
