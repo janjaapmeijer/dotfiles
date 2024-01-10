@@ -1,13 +1,3 @@
-#!/bin/bash
-
-sudo apt update
-sudo apt upgrade
-
-sudo apt install vanilla-gnome-desktop vanilla-gnome-default-settings
-sudo apt purge ubuntu-desktop gnome-shell-extension-ubuntu-dock
-
-sudo apt autoremove --purge
-
 sudo apt update
 sudo apt upgrade
 sudo apt install curl
@@ -27,22 +17,21 @@ sudo apt install digikam
 # gnome-clocks
 # inkscape
 # joplin
-keepassxc
-klatexformula
-ledgerlive
-nordvpn
-okular
+# klatexformula
+# ledgerlive
+# nordvpn
+# okular
 # (qgis)
 # (redshift)
 # slack
-superproductivity
-syncthing
-teams
-telegram
-timeshift
-tlp #(battery optimizer)
+# superproductivity
+# syncthing
+# teams
+# telegram
+# timeshift
+# tlp #(battery optimizer)
 # transmission
-vlc
+# vlc
 # (xygrib)
-zoom
-zotero
+# zoom
+# zotero
