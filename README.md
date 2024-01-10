@@ -13,7 +13,9 @@ However, to have a bit more control over the configuration of your OS, you can a
 First, we have to install the dotfiles manager `chezmoi` on your new to configure machine with:
 
 `$ sh -c "$(wget -qO- get.chezmoi.io/lb)"`
+
 `$ echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile`
+
 `$ source ~/.bash_profile`
 
 To initialise the dotfiles we can checkout this repo to the your local machine with:
@@ -29,4 +31,4 @@ If you agree to these changes you can first do a dry-run, with
 and then eventually, `$ chezmoi apply`.
 
 
-add dconf.ini to .chezmoiignore
+Update gnome setting in `dconf.ini` and add `dconf.ini` to `.chezmoiignore`, so that it doesn't end up in your $HOME folder.
