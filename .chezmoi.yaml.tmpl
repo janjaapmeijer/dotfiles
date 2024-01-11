@@ -21,7 +21,7 @@
 
   {{- /* Set contact details */ -}}
   {{- if hasKey . "name" -}}
-    {{-   $name = .name -}}
+    {{- $name = .name -}}
   {{- else -}}
     {{- $name = promptString "What is you full name?" -}}
   {{- end -}}
