@@ -1,0 +1,6 @@
+packages:
+  linux:
+    apt:
+      - 'git'
+      - 'curl'
+      - 'filezilla'
