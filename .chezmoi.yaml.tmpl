@@ -3,9 +3,9 @@
 {{- $name := "Jan Jaap Meijer" -}}
 {{- $email := "janjaapmeijer@gmail.com" -}}
 
-sourceDir = {{ .chezmoi.sourceDir | quote }}
+sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
-  name = {{ $name | quote }}
-  email = {{ $email | quote }}
+  name: {{ $name | quote }}
+  email: {{ $email | quote }}
   codespaces: {{ $codespaces }}
