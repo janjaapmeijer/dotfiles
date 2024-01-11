@@ -55,11 +55,12 @@
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
+{{/* user: {{ $user | quote }} */}}
+{{/* gpgsign = {{ $gpgsign }} */}}
+
 data:
   name: {{ $name | quote }}
-  # user: {{ $user | quote }}
-  email: {{ $email | quote }}
-  # gpgsign = {{ $gpgsign }}
+  email: {{ $email | quote }}  
 
   store_secrets: {{ $storeSecrets }}
   install_apps: {{ $installApps }}
