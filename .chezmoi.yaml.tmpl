@@ -57,9 +57,9 @@ sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
   name: {{ $name | quote }}
-  <!-- user: {{ $user | quote }} -->
+  # user: {{ $user | quote }}
   email: {{ $email | quote }}
-  <!-- gpgsign = {{ $gpgsign }} -->
+  # gpgsign = {{ $gpgsign }}
 
   store_secrets: {{ $storeSecrets }}
   install_apps: {{ $installApps }}
