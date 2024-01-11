@@ -39,6 +39,7 @@
       {{- $database = promptString "What is the path ad filename to the database file?" -}}
       {{- writeToStdout (printf "Secrets stored in '%s' \n" $database) -}}
     {{- else -}}
+      {{- $database := "" -}}
       {{- writeToStdout "Secrets not available..." -}}
     {{- end -}}
   {{- end -}}
@@ -60,7 +61,7 @@ sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
   name: {{ $name | quote }}
-  email: {{ $email | quote }}  
+  email: {{ $email | quote }}
 
   store_secrets: {{ $storeSecrets }}
   install_apps: {{ $installApps }}
