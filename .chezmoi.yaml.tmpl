@@ -5,6 +5,7 @@
 {{- $name := "Jan Jaap Meijer" -}}
 {{- $email := "" -}}
 {{- $storeSecrets := false -}}
+{{- $database := "" -}}
 {{- $installApps := false -}}
 {{- $gnome := lookPath "gnome-shell" | not | not -}}
 
@@ -39,7 +40,6 @@
       {{- $database = promptString "What is the path ad filename to the database file?" -}}
       {{- writeToStdout (printf "Secrets stored in '%s' \n" $database) -}}
     {{- else -}}
-      {{- $database := "" -}}
       {{- writeToStdout "Secrets not available..." -}}
     {{- end -}}
   {{- end -}}
