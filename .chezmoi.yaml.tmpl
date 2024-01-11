@@ -1,11 +1,68 @@
+{{- /* Support for non-interactive installation for virtual machines with Codespaces. */ -}}
+{{- /* https://www.chezmoi.io/user-guide/machines/containers-and-vms/ */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 
 {{- $name := "Jan Jaap Meijer" -}}
-{{- $email := "janjaapmeijer@gmail.com" -}}
+{{- $email := "" -}}
+{{- $storeSecrets := false -}}
+{{- $installApps := false -}}
+
+{{/* Non-interactive setup, for Codespaces dotfiles */}}
+{{- if $codespaces }}
+
+  {{- $name := "Jan Jaap Meijer" -}}
+  {{- $email := "janjaapmeijer@gmail.com" -}}
+  {{- $storeSecrets := false -}}
+  {{- $installApps := false -}}
+
+{{- else }} {{/* Interactive setup */}}
+
+  {{- /* Set contact details */ -}}
+  {{- if hasKey . "name" -}}
+    {{-   $name = .name -}}
+  {{- else -}}
+    {{- $email = {{ promptString "What is you full name?" -}}
+  {{- end -}}
+  {{- if (hasKey . "email") -}}
+    {{- $email = .email -}}
+  {{- else -}}
+    {{- $email = {{ promptString "What is your email address?" -}}
+  {{- end }}
+
+  {{- /* Store passwords */ -}}
+  {{- if (hasKey . "store_secrets") -}}
+    {{- $storeSecrets = .store_secrets -}}
+  {{- else -}}
+    {{- $storeSecrets = promptBool "Store secrets on this machine (true/false)?" false -}}
+    {{- if $storeSecrets -}}
+      {{- $database := promptString "What is the path ad filename to the database file?" -}}
+      {{- writeToStdout "Secrets stored... \n" -}}
+    {{- else -}}
+      {{- writeToStdout "Secrets not available" -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- /* Install applications */ -}}
+  {{- if (hasKey . "install_apps") -}}
+    {{- $installApps = .install_apps -}}
+  {{- else -}}
+    {{- $installApps = promptBool "Install additional apps (true/false)?" false -}}
+  {{- end -}}
+
+{{- end -}}
+
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
   name: {{ $name | quote }}
+  <!-- user: {{ $user | quote }} -->
   email: {{ $email | quote }}
+  <!-- gpgsign = {{ $gpgsign }} -->
+
+  store_secrets: {{ $storeSecrets }}
+  install_apps: {{ $installApps }}
   codespaces: {{ $codespaces }}
+
+keepassxc:
+  database: {{ $database | quote }}
