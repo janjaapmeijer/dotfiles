@@ -1,3 +1,5 @@
+{{- if not .codespaces -}}
+
 [user]
 	name = {{ .name }}
 	email = {{ .email }}
@@ -7,3 +9,5 @@
 
 [credential]
 	helper = cache --timeout=86400
+
+{{- end -}}
