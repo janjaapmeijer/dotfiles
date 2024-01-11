@@ -6,6 +6,7 @@
 {{- $email := "" -}}
 {{- $storeSecrets := false -}}
 {{- $installApps := false -}}
+{{- $gnome := lookPath "gnome-shell" | not | not -}}
 
 {{/* Non-interactive setup, for Codespaces dotfiles */}}
 {{- if $codespaces }}
@@ -21,12 +22,12 @@
   {{- if hasKey . "name" -}}
     {{-   $name = .name -}}
   {{- else -}}
-    {{- $email = {{ promptString "What is you full name?" -}}
+    {{- $name = promptString "What is you full name?" -}}
   {{- end -}}
   {{- if (hasKey . "email") -}}
     {{- $email = .email -}}
   {{- else -}}
-    {{- $email = {{ promptString "What is your email address?" -}}
+    {{- $email = promptString "What is your email address?" -}}
   {{- end }}
 
   {{- /* Store passwords */ -}}
@@ -35,10 +36,10 @@
   {{- else -}}
     {{- $storeSecrets = promptBool "Store secrets on this machine (true/false)?" false -}}
     {{- if $storeSecrets -}}
-      {{- $database := promptString "What is the path ad filename to the database file?" -}}
-      {{- writeToStdout "Secrets stored... \n" -}}
+      {{- $database = promptString "What is the path ad filename to the database file?" -}}
+      {{- writeToStdout (printf "Secrets stored in '%s' \n" $database) -}}
     {{- else -}}
-      {{- writeToStdout "Secrets not available" -}}
+      {{- writeToStdout "Secrets not available..." -}}
     {{- end -}}
   {{- end -}}
 
@@ -63,6 +64,7 @@ data:
   store_secrets: {{ $storeSecrets }}
   install_apps: {{ $installApps }}
   codespaces: {{ $codespaces }}
+  is_gnome: {{ $gnome }}
 
 keepassxc:
   database: {{ $database | quote }}
