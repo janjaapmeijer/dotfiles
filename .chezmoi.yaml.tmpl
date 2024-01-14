@@ -37,7 +37,7 @@
   {{- else -}}
     {{- $storeSecrets = promptBool "Store secrets on this machine (true/false)?" false -}}
     {{- if $storeSecrets -}}
-      {{- $database = promptString "What is the path ad filename to the database file?" -}}
+      {{- $database = promptString "What is the path and filename to the database file?" -}}
       {{- writeToStdout (printf "Secrets stored in '%s' \n" $database) -}}
     {{- else -}}
       {{- writeToStdout "Secrets not available..." -}}
