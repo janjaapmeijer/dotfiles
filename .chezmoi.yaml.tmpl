@@ -51,10 +51,11 @@
     {{- $installApps = promptBool "Install additional apps (true/false)?" false -}}
   {{- end -}}
 
-{{- end -}}
+{{- end }}
 
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
+verbose: true
 
 {{/* user: {{ $user | quote }} */}}
 {{/* gpgsign = {{ $gpgsign }} */}}
