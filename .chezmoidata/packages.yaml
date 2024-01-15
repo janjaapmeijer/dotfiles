@@ -4,3 +4,5 @@ packages:
       - 'git'
       - 'curl'
       - 'filezilla'
+      - 'codium'
+      - 'brave-browser'
