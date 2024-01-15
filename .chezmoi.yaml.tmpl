@@ -2,7 +2,7 @@
 {{- /* https://www.chezmoi.io/user-guide/machines/containers-and-vms/ */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 
-{{- $name := "Jan Jaap Meijer" -}}
+{{- $name := "" -}}
 {{- $email := "" -}}
 {{- $storeSecrets := false -}}
 {{- $database := "" -}}
@@ -29,7 +29,7 @@
     {{- $email = .email -}}
   {{- else -}}
     {{- $email = promptString "What is your email address?" -}}
-  {{- end }}
+  {{- end -}}
 
   {{- /* Store passwords */ -}}
   {{- if (hasKey . "store_secrets") -}}

@@ -4,10 +4,10 @@
 	name = {{ .name }}
 	email = {{ .email }}
 
-# [commit]
-#	gpgsign = {{ .gpgsign }}
-
 [credential]
 	helper = cache --timeout=86400
+
+{{/* [commit] */}}
+{{/* gpgsign = {{ .gpgsign }} */}}
 
 {{- end -}}
