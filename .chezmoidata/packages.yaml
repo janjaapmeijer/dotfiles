@@ -3,6 +3,36 @@ packages:
     apt:
       - 'git'
       - 'curl'
-      - 'filezilla'
-      - 'codium'
+      - 'tlp'
       - 'brave-browser'
+      - 'codium'
+      - 'filezilla'
+      - 'guake'
+      - 'joplin
+      - 'klatexformula'
+      - 'okular'
+      - 'slack'
+      - 'syncthing'
+      - 'telegram-desktop'
+      - 'transmission'
+      - 'vlc'
+      - 'zotero'
+    snap:
+      - 'superproductivity'
+      - 'slack'
+      - 'zoom-client'  
+
+# atom
+# (blender)
+# calibre
+# digikam
+# eternl
+# gnome-clocks
+# inkscape
+# ledgerlive
+# nordvpn
+# (qgis)
+# (redshift)
+# timeshift
+# (xygrib)
+# zotero
