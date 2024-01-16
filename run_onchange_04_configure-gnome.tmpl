@@ -5,7 +5,7 @@ set -e
 # Install GNOME extensions
 if conda --version
 then
-  conda init bash
+  source ~/miniconda3/etc/profile.d/conda.sh
   conda activate system
   pip3 install --upgrade gnome-extensions-cli
   gext install dash-to-panel@home-sweet-gnome.github.com
