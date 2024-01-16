@@ -1,66 +1,66 @@
 {{- if and (eq .chezmoi.os "linux") (.is_gnome) -}}
-  #!/bin/bash
-  set -e
+#!/bin/bash
+set -e
 
-  # Install GNOME extensions
-  if ! conda --version
-  then
-    conda activate system
-    pip3 install --upgrade gnome-extensions-cli
-    gext install dash-to-panel@home-sweet-gnome.github.com
-    gext install gnome-shell-extension-caffeine@eonpatapon.github.com
-  fi
-   
-  dconf load / <<EOF
-  
-  [org/gnome/desktop/background]
-  color-shading-type='solid'
-  picture-options='zoom'
-  picture-uri='file://{{ .chezmoi.homeDir }}/Pictures/wallpapers/1711-burkard-04142.jpg'
-  
-  [org/gnome/desktop/calendar]
-  show-weekdate=true
-  
-  [org/gnome/desktop/interface]
-  clock-show-date=true
-  clock-show-weekday=true
-  clock-show-seconds=false
-  enable-hot-corners=false
-  show-battery-percentage=true
-  
-  [org/gnome/desktop/media-handling]
-  autorun-never=true
-  
-  [org/gnome/calendar]
-  active-view='month'
-  
-  # [org/gnome/clocks]
-  
-  [org/gnome/shell]
-  disable-user-extensions=false
-  enabled-extensions=['gnome-shell-extension-caffeine@eonpatapon.github.com', \
-  'dash-to-panel@home-sweet-gnome.github.com', \
-  'gse-sound-output-device-chooser@kgshank.github.com']
-  favorite-apps=['org.gnome.Terminal.desktop']
-  
-  [org/gnome/shell/extensions/caffeine]
-  user-enabled=true
-  
-  [org/gnome/shell/extensions/dash-to-dock]
-  dock-position='BOTTOM'
-  intellihide-mode='FOCUS_APPLICATION_WINDOWS'
-  preferred-monitor=0
-  panel-size=26
-  show-clock-all-monitors=false
-  show-favorites-all-monitors=false
-  show-status-menu-all-monitors=false
-  show-showdesktop-button=true
-  trans-panel-opacity=0.6
-  
-  [org/gnome/shell/extensions/sound-output-device-chooser]
-  show-input-slider=false
-  hide-menu-icons=false
-  
-  EOF
+# Install GNOME extensions
+if ! conda --version
+then
+  conda activate system
+  pip3 install --upgrade gnome-extensions-cli
+  gext install dash-to-panel@home-sweet-gnome.github.com
+  gext install gnome-shell-extension-caffeine@eonpatapon.github.com
+fi
+ 
+dconf load / <<EOF
+
+[org/gnome/desktop/background]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='file://{{ .chezmoi.homeDir }}/Pictures/wallpapers/1711-burkard-04142.jpg'
+
+[org/gnome/desktop/calendar]
+show-weekdate=true
+
+[org/gnome/desktop/interface]
+clock-show-date=true
+clock-show-weekday=true
+clock-show-seconds=false
+enable-hot-corners=false
+show-battery-percentage=true
+
+[org/gnome/desktop/media-handling]
+autorun-never=true
+
+[org/gnome/calendar]
+active-view='month'
+
+# [org/gnome/clocks]
+
+[org/gnome/shell]
+disable-user-extensions=false
+enabled-extensions=['gnome-shell-extension-caffeine@eonpatapon.github.com', \
+'dash-to-panel@home-sweet-gnome.github.com', \
+'gse-sound-output-device-chooser@kgshank.github.com']
+favorite-apps=['org.gnome.Terminal.desktop']
+
+[org/gnome/shell/extensions/caffeine]
+user-enabled=true
+
+[org/gnome/shell/extensions/dash-to-dock]
+dock-position='BOTTOM'
+intellihide-mode='FOCUS_APPLICATION_WINDOWS'
+preferred-monitor=0
+panel-size=26
+show-clock-all-monitors=false
+show-favorites-all-monitors=false
+show-status-menu-all-monitors=false
+show-showdesktop-button=true
+trans-panel-opacity=0.6
+
+[org/gnome/shell/extensions/sound-output-device-chooser]
+show-input-slider=false
+hide-menu-icons=false
+
+EOF
 
 {{- end -}}
