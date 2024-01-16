@@ -1,0 +1,9 @@
+extensions:
+  linux:
+      - 'dash-to-dock@micxgx.gmail.com'
+      - 'caffeine@patapon.info'
+      - 'sound-output-device-chooser@kgshank.net'
+      - 'drive-menu@gnome-shell-extensions.gcampax.github.com'
+      - 'places-menu@gnome-shell-extensions.gcampax.github.com'
+      - 'clipboard-indicator@tudmotu.com'
+      - 'cpupower@mko-sl.de'
