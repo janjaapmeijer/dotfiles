@@ -38,6 +38,9 @@ sudo add-apt-repository ppa:linrunner/tlp
   {{ range .packages.linux.apt -}}
   sudo apt install {{ . | quote }}
   {{ end -}}
+  {{ range .packages.linux.snap -}}
+  sudo snap install {{ . | quote }}
+  {{ end -}}
 {{- end -}}
 
 # Set environment variables
