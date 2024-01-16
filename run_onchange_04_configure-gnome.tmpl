@@ -2,7 +2,9 @@
 #!/bin/bash
 set -e
 
+##########################
 # Install GNOME extensions
+##########################
 if conda --version
 then
   source ~/miniconda3/etc/profile.d/conda.sh
@@ -16,9 +18,9 @@ then
   {{- end -}}
 fi
 
-
-
-# Configure extensions
+#################
+# Configure GNOME
+#################
 dconf load / <<EOF
 
 [org/gnome/desktop/background]
@@ -44,6 +46,9 @@ active-view='month'
 
 # [org/gnome/clocks] world clocks
 
+############################
+# Configure GNOME extensions
+############################
 [org/gnome/shell]
 disable-user-extensions=false
 enabled-extensions=['dash-to-dock@micxgx.gmail.com',\
