@@ -22,6 +22,16 @@ echo 'deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://
 # install Joplin
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
 
+# install Microsoft Teams 
+wget –O teams.deb https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.3.00.5153_amd64.deb
+sudo apt install ./teams_1.3.00.5153_amd64.deb
+
+# install zotero
+wget -qO- https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | bash
+
+# Add package repositories
+sudo add-apt-repository ppa:linrunner/tlp
+
 # Script to install Debian applications for new machine
 {{ if eq .chezmoi.os "linux" -}}
   sudo apt update && sudo apt upgrade
@@ -29,6 +39,8 @@ wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_
   sudo apt install {{ . | quote }}
   {{ end -}}
 {{- end -}}
+
+# Set environment variables
 
 # Install Miniconda
 if ! conda --version  
