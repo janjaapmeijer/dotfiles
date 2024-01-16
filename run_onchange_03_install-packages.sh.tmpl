@@ -13,7 +13,11 @@ echo 'deb [signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg] https://d
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo 'deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main' \
   | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-# sudo apt install brave-browser
+
+# Syncthing
+sudo curl -L -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+echo 'deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable' \
+  | sudo tee /etc/apt/sources.list.d/syncthing.list
 
 # install Joplin
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
