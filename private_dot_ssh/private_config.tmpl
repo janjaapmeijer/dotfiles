@@ -4,7 +4,7 @@ Host example.org
  IdentityFile ~/.ssh/id_rsa
 
 Host example.net
- User {{ (bitwarden "item" "xxx-xxx-xxx").notes }}
+ User {{ (keepassxc "example").UserName }}
  IdentityFile ~/.ssh/id_rsa
 
 {{ end -}}
