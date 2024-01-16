@@ -1,9 +1,10 @@
-brave-browser.desktop
-codium.desktop
-filezilla.desktop
-firefox.desktop
-org.gnome.Calculator
-org.gnome.Contacts
-org.gnome.Maps
-org.gnome.Terminal
-org.keepassxc.KeePassXC.desktop
+linux:
+  - 'brave-browser.desktop'
+  - 'codium.desktop'
+  - 'filezilla.desktop'
+  - 'firefox.desktop'
+  - 'org.gnome.Calculator'
+  - 'org.gnome.Contacts'
+  - 'org.gnome.Maps'
+  - 'org.gnome.Terminal'
+  - 'org.keepassxc.KeePassXC.desktop'
