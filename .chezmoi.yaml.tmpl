@@ -4,6 +4,7 @@
 
 {{- $name := "" -}}
 {{- $email := "" -}}
+{{- $hostname := .chezmoi.hostname }}
 {{- $storeSecrets := false -}}
 {{- $database := "" -}}
 {{- $installApps := false -}}
@@ -29,6 +30,12 @@
     {{- $email = .email -}}
   {{- else -}}
     {{- $email = promptString "What is your email address?" -}}
+  {{- end -}}
+
+  {{- if promptBool (printf "Would you like to keep '%s' as your hostname?\n" $hostname) true -}}
+    {{- $hostname = .hostname -}}
+  {{- else -}}
+    {{- $hostname = promptString "Provide your new hostname:" -}}
   {{- end -}}
 
   {{- /* Store passwords */ -}}
@@ -63,6 +70,7 @@ verbose: true
 data:
   name: {{ $name | quote }}
   email: {{ $email | quote }}
+  hostname: {{ $hostname | quote }}
 
   store_secrets: {{ $storeSecrets }}
   install_apps: {{ $installApps }}
