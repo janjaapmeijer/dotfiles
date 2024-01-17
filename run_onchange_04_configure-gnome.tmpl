@@ -5,15 +5,15 @@ set -e
 ##########################
 # Install GNOME extensions
 ##########################
-if conda --version
+if conda info --envs | grep -q system
 then
   source ~/miniconda3/etc/profile.d/conda.sh
   conda activate system
-  pip3 install --upgrade gnome-extensions-cli
 
   {{ if eq .chezmoi.os "linux" -}}
+    pip3 install --upgrade gnome-extensions-cli
     {{ range .extensions.linux -}}
-    sudo gext install {{ . | quote }}
+    gext install {{ . | quote }}
     {{ end -}}
   {{- end -}}
 fi
@@ -21,13 +21,12 @@ fi
 #################
 # Configure GNOME
 #################
-mv {{ .chezmoi.homeDir }}/wallpapers {{ .chezmoi.homeDir }}/Pictures/wallpapers
 dconf load / <<EOF
 
 [org/gnome/desktop/background]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file://{{ .chezmoi.homeDir }}/Pictures/wallpapers/sailing_ship_greenland_icebergs_3440x1440.jpg'
+picture-uri='file://{{ .chezmoi.sourceDir }}/wallpapers/sailing_ship_greenland_icebergs_3440x1440.jpg'
 
 [org/gnome/desktop/calendar]
 show-weekdate=true
@@ -63,10 +62,10 @@ favorite-apps=['brave-browser.desktop',\
 'codium.desktop',\
 'filezilla.desktop',\
 'firefox.desktop',\
-'org.gnome.Calculator',\
-'org.gnome.Contacts',\
-'org.gnome.Maps',\
-'org.gnome.Terminal',\
+'org.gnome.Calculator.desktop',\
+'org.gnome.Contacts.desktop',\
+'org.gnome.Maps.desktop',\
+'org.gnome.Terminal.desktop',\
 'org.keepassxc.KeePassXC.desktop']
 
 [org/gnome/shell/extensions/caffeine]
