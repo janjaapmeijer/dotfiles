@@ -54,7 +54,13 @@ then
   rm -rf ~/Downloads/Miniconda3-latest-Linux-x86_64.sh
   echo 'export PATH=~/miniconda3/bin:$PATH' >> ~/.bash_profile
   source ~/.bash_profile
+
+  if conda info --envs | grep -q system
+  then
+    echo "conda environment systen already exists"
+  else
+    conda create --name system
+  fi
 fi
-conda create --name system
 
 {{- end -}}
