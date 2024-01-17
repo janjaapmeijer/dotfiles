@@ -1,5 +1,14 @@
-{{- if .install_apps -}}
+{{- if and (eq .chezmoi.os "linux") (.install_apps) -}}
 #!/bin/bash
+
+# get architecture of device
+architecture=""
+case $(uname -m) in
+    i386 | i686)   architecture="386" ;;
+    x86_64) architecture="amd64" ;;
+    arm)    dpkg --print-architecture | grep -q "arm64" && architecture="arm64" || architecture="arm" ;;
+    *)   echo "Unable to determine system architecture."; exit 1 ;;
+esac
 
 # add keyrings
 # VSCodium
@@ -11,7 +20,7 @@ echo 'deb [signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg] https://d
 
 # Brave browser
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo 'deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main' \
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=$architecture] https://brave-browser-apt-release.s3.brave.com/ stable main" \
   | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
 # Syncthing
@@ -19,12 +28,13 @@ sudo curl -L -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncth
 echo 'deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable' \
   | sudo tee /etc/apt/sources.list.d/syncthing.list
 
+# Microsoft Teams
+#sudo curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+#sudo sh -c "echo 'deb ["arch=$architecture"] https://packages.microsoft.com/repos/ms-teams stable main' > /etc/apt/sources.list.d/teams.list"
+#sudo apt install teams
+
 # install Joplin
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
-
-# install Microsoft Teams 
-wget –O teams.deb https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.3.00.5153_amd64.deb
-sudo apt install ./teams_1.3.00.5153_amd64.deb
 
 # install zotero
 wget -qO- https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | bash
