@@ -1,9 +1,8 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 
 # Change name of device
 hostnamectl set-hostname {{ .hostname }}
-echo {{ .hostname }}
-echo {{ .chezmoi.hostname }}
 
 # Install essential packages and GNOME Desktop Environment
 sudo apt update && sudo apt upgrade
@@ -17,3 +16,4 @@ sudo apt autoremove --purge
 
 # Adding some environment paths
 echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile
+{{- end -}}
