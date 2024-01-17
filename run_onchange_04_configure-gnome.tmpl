@@ -21,12 +21,13 @@ fi
 #################
 # Configure GNOME
 #################
+mv {{ .chezmoi.homeDir }}/wallpapers {{ .chezmoi.homeDir }}/Pictures/wallpapers
 dconf load / <<EOF
 
 [org/gnome/desktop/background]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file://{{ .chezmoi.homeDir }}/Pictures/wallpapers/1711-burkard-04142.jpg'
+picture-uri='file://{{ .chezmoi.homeDir }}/Pictures/wallpapers/sailing_ship_greenland_icebergs_3440x1440.jpg'
 
 [org/gnome/desktop/calendar]
 show-weekdate=true
