@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Change name of device
+hostnamectl set-hostname {{ .hostname }}
+echo {{ .hostname }}
+echo {{ .chezmoi.hostname }}
+
+# Install essential packages and GNOME Desktop Environment
 sudo apt update && sudo apt upgrade
 sudo apt git
 sudo apt curl
