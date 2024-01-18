@@ -48,12 +48,30 @@ sudo add-apt-repository ppa:linrunner/tlp
   {{ range .packages.linux.apt -}}
   sudo apt install {{ . | quote }}
   {{ end -}}
+  sudo snap refresh
   {{ range .packages.linux.snap -}}
   sudo snap install {{ . | quote }}
   {{ end -}}
 {{- end -}}
 
 # Set environment variables
+
+# tlp settings for battery optimization
+# battery charge thresholds
+sed 's/^ *# *START_CHARGE_THRESH_BAT0 *= *[^ ]*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
+sed 's/^ *# *STOP_CHARGE_THRESH_BAT0 *= *[^ ]*/STOP_CHARGE_THRESH_BAT0=85/' /etc/tlp.conf
+
+# power profiles
+sed 's/^ *# *PLATFORM_PROFILE_ON_AC *= *[^ ]*/PLATFORM_PROFILE_ON_AC=performance/' /etc/tlp.conf
+sed 's/^ *# *PLATFORM_PROFILE_ON_BAT *= *[^ ]*/PLATFORM_PROFILE_ON_BAT=low-power/' /etc/tlp.conf
+
+sed 's/^ *# *CPU_ENERGY_PERF_POLICY_ON_AC *= *[^ ]*/CPU_ENERGY_PERF_POLICY_ON_AC=performance/' /etc/tlp.conf
+sed 's/^ *# *CPU_ENERGY_PERF_POLICY_ON_BAT *= *[^ ]*/CPU_ENERGY_PERF_POLICY_ON_BAT=power/' /etc/tlp.conf
+
+sed 's/^ *# *CPU_BOOST_ON_AC *= *[^ ]*/CPU_BOOST_ON_AC=1/' /etc/tlp.conf
+sed 's/^ *# *CPU_BOOST_ON_BAT *= *[^ ]*/CPU_BOOST_ON_BAT=0/' /etc/tlp.conf
+
+sudo tlp start
 
 # Install Miniconda
 if ! conda --version  
