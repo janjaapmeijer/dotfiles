@@ -44,6 +44,13 @@ autorun-never=true
 [org/gnome/calendar]
 active-view='month'
 
+[apps/guake/general]
+start-at-login=true
+window-ontop=true
+
+[apps/guake/keybindings/global]
+show-hide='<Primary>grave'
+
 # [org/gnome/clocks] world clocks
 
 ############################
@@ -61,11 +68,14 @@ enabled-extensions=['dash-to-dock@micxgx.gmail.com',\
 favorite-apps=['brave-browser.desktop',\
 'codium.desktop',\
 'filezilla.desktop',\
-'firefox.desktop',\
+'firefox_firefox.desktop',\
 'org.gnome.Calculator.desktop',\
 'org.gnome.Contacts.desktop',\
 'org.gnome.Maps.desktop',\
 'org.gnome.Terminal.desktop',\
+'superproductivity_superproductivity.desktop',\
+'telegramdesktop.desktop',\
+'appimagekit-joplin.desktop',\
 'org.keepassxc.KeePassXC.desktop']
 
 [org/gnome/shell/extensions/caffeine]
@@ -75,12 +85,11 @@ user-enabled=true
 dock-position='BOTTOM'
 intellihide-mode='FOCUS_APPLICATION_WINDOWS'
 preferred-monitor=0
-# panel-size=26
-# show-clock-all-monitors=false
-# show-favorites-all-monitors=false
-# show-status-menu-all-monitors=false
-# show-showdesktop-button=true
-# trans-panel-opacity=0.6
+show-clock-all-monitors=false
+show-favorites-all-monitors=false
+show-status-menu-all-monitors=false
+show-showdesktop-button=true
+transparency-mode='DYNAMIC'
 
 [org/gnome/shell/extensions/sound-output-device-chooser]
 show-input-slider=false
