@@ -3,6 +3,7 @@
 
 # Change name of device
 hostnamectl set-hostname {{ .hostname }}
+sudo grep -rl {{ .chezmoi.hostname }} /etc | sudo xargs sed -i "s/{{ .chezmoi.hostname }}/{{ .hostname }}/g"
 
 # Install essential packages and GNOME Desktop Environment
 sudo apt update && sudo apt upgrade
