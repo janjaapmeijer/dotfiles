@@ -9,9 +9,12 @@ if conda info --envs | grep -q system
 then
   source ~/miniconda3/etc/profile.d/conda.sh
   conda activate system
+  if ! pip --version; then
+    conda install -c conda-forge pip
+  fi
+  pip install --upgrade gnome-extensions-cli
 
   {{ if eq .chezmoi.os "linux" -}}
-    pip3 install --upgrade gnome-extensions-cli
     {{ range .extensions.linux -}}
     gext install {{ . | quote }}
     {{ end -}}
@@ -63,8 +66,7 @@ enabled-extensions=['dash-to-dock@micxgx.gmail.com',\
 'sound-output-device-chooser@kgshank.net',\
 'drive-menu@gnome-shell-extensions.gcampax.github.com',\
 'places-menu@gnome-shell-extensions.gcampax.github.com',\
-'clipboard-indicator@tudmotu.com',\
-'cpupower@mko-sl.de']
+'clipboard-indicator@tudmotu.com']
 favorite-apps=['brave-browser.desktop',\
 'codium.desktop',\
 'filezilla.desktop',\
