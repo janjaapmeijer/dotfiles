@@ -16,5 +16,6 @@ sudo apt purge ubuntu-desktop gnome-shell-extension-ubuntu-dock
 sudo apt autoremove --purge
 
 # Adding some environment paths
-echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile
+echo 'export PATH=~/.local/bin:$PATH' >> ~/.profile
+echo 'export PATH=~/usr/share:$PATH' >> ~/.profile
 {{- end -}}
