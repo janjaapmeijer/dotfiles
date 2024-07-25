@@ -1,0 +1,25 @@
+name: ocean3
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python>=3.11
+  - numpy
+  - ipykernel
+  - ipywidgets
+  - jupyterlab
+  - pyproj
+  - netCDF4
+  - scipy
+  - gsw
+  - xarray
+  - dask
+  - scipy
+  - xgcm
+  - ffmpeg
+  - pandas
+  - geopandas
+  - matplotlib
+  - cartopy
+  # pip:

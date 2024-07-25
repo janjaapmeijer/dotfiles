@@ -6,3 +6,6 @@ extensions:
       - 'drive-menu@gnome-shell-extensions.gcampax.github.com'
       - 'places-menu@gnome-shell-extensions.gcampax.github.com'
       - 'clipboard-indicator@tudmotu.com'
+      - 'syncthing@gnome.2nv2u.com'
+      - 'world_clock_lite@ailin.nemui'
+      - 'display-brightness-ddcutil@themightydeity.github.com'

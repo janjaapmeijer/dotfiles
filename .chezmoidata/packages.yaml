@@ -5,12 +5,17 @@ packages:
       - 'curl'
       - 'tlp'
       - 'brave-browser'
+      - 'calibre'
       - 'codium'
       - 'doublecmd-gtk'
+      - 'evolution'
+      - 'flatpak'
+      - 'gh'
+      - 'gnome-clocks'
       - 'guake'
       - 'klatexformula'
       - 'okular'
-      - 'slack'
+      - 'smbclient'
       - 'syncthing'
       - 'telegram-desktop'
       - 'transmission'
@@ -19,14 +24,14 @@ packages:
     snap:
       - 'superproductivity'
       - 'slack'
-      - 'zoom-client'  
+      - 'zoom-client'
+    # flatpak:
+    #   - 'io.github.rinigus.PureMaps'
 
 # atom
 # (blender)
-# calibre
 # digikam
 # eternl
-# gnome-clocks
 # inkscape
 # ledgerlive
 # nordvpn
@@ -34,4 +39,3 @@ packages:
 # (redshift)
 # timeshift
 # (xygrib)
-# zotero

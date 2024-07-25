@@ -1,0 +1,24 @@
+checkouts:
+  phd:
+    - name: 'phd'
+    - url: 'https://github.com/janjaapmeijer/phd.git'
+
+# teos10
+# - pygamman (url = https://github.com/guidov/pygamman_f2py.git)
+# - gsw-python (url = https://github.com/janjaapmeijer/GSW-Python.git)
+# - gsw-matlab
+# rkdeveloptool (url = https://github.com/rockchip-linux/rkdeveloptool)
+# phd-thesis
+# phd-figs
+# phd
+# oceanpy
+# mom6-regional-scripts (url = https://github.com/COSIMA/mom6-regional-scripts.git)
+# manuscripts
+# emapex (url = https://github.com/janjaapmeijer/emapex.git)
+# emapex-matlab
+# eecc
+# dotfiles-private
+# dotfiles
+# cv
+# atsea
+# aciar
