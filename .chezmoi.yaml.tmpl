@@ -7,6 +7,7 @@
 {{- $hostname := .chezmoi.hostname -}}
 {{- $storeSecrets := false -}}
 {{- $database := "" -}}
+{{- $keyfile := "" -}}
 {{- $installApps := false -}}
 {{- $gnome := lookPath "gnome-shell" | not | not -}}
 
@@ -37,15 +38,17 @@
   {{- else -}}
     {{- $hostname = promptString "Provide your new hostname:" -}}
   {{- end -}}
+  {{- writeToStdout (printf "Hostname is set to: '%s' \n" $hostname) -}}
 
   {{- /* Store passwords */ -}}
-  {{- if (hasKey . "store_secrets") -}}
+  {{- if and (hasKey . "store_secrets") (hasKey . "database") (hasKey . "keyfile") -}}
     {{- $storeSecrets = .store_secrets -}}
   {{- else -}}
     {{- $storeSecrets = promptBool "Store secrets on this machine (true/false)?" false -}}
     {{- if $storeSecrets -}}
       {{- $database = promptString "What is the path and filename to the database file?" -}}
       {{- writeToStdout (printf "Secrets stored in '%s' \n" $database) -}}
+      {{- $keyfile = promptString "What is the path and filename to the key file?" -}}
     {{- else -}}
       {{- writeToStdout "Secrets not available..." -}}
     {{- end -}}
@@ -79,3 +82,5 @@ data:
 
 keepassxc:
   database: {{ $database | quote }}
+  args: ["--key-file", {{ $keyfile | quote }}]
+  mode: "open"
