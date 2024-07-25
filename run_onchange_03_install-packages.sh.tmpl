@@ -1,16 +1,10 @@
 {{- if and (eq .chezmoi.os "linux") (.install_apps) -}}
 #!/bin/bash
 
-# get architecture of device
-architecture=""
-case $(uname -m) in
-    i386 | i686)   architecture="386" ;;
-    x86_64) architecture="amd64" ;;
-    arm)    dpkg --print-architecture | grep -q "arm64" && architecture="arm64" || architecture="arm" ;;
-    *)   echo "Unable to determine system architecture."; exit 1 ;;
-esac
+##############
+# Add keyrings
+##############
 
-# add keyrings
 # VSCodium
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
   | gpg --dearmor \
@@ -20,7 +14,7 @@ echo 'deb [signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg] https://d
 
 # Brave browser
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=$architecture] https://brave-browser-apt-release.s3.brave.com/ stable main" \
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch={{ .chezmoi.arch }}] https://brave-browser-apt-release.s3.brave.com/ stable main" \
   | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
 # Syncthing
@@ -30,58 +24,104 @@ echo 'deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://
 
 # Microsoft Teams
 #sudo curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-#sudo sh -c "echo 'deb ["arch=$architecture"] https://packages.microsoft.com/repos/ms-teams stable main' > /etc/apt/sources.list.d/teams.list"
+#sudo sh -c "echo 'deb ["arch={{ .chezmoi.arch }}"] https://packages.microsoft.com/repos/ms-teams stable main' > /etc/apt/sources.list.d/teams.list"
 #sudo apt install teams
 
+##################
+# Install packages
+##################
+
 # install Joplin
-wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
+wget -qO- https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
 
 # install zotero
 wget -qO- https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | bash
 
 # Add package repositories
 sudo add-apt-repository ppa:linrunner/tlp
+sudo add-apt-repository ppa:flatpak/stable
 
 # Script to install Debian applications for new machine
 {{ if eq .chezmoi.os "linux" -}}
+  
   sudo apt update && sudo apt upgrade
   {{ range .packages.linux.apt -}}
-  sudo apt install {{ . | quote }}
+  sudo apt install {{ . | quote }} -y
   {{ end -}}
+  
   sudo snap refresh
   {{ range .packages.linux.snap -}}
   sudo snap install {{ . | quote }}
   {{ end -}}
+  
+  {{ range .packages.linux.flatpak -}}
+  flatpak update
+  flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak install --user flathub {{ . }}
+  {{ end -}}
 {{- end -}}
 
+# install evolution-decsync for contacts syncthing
+# https://github.com/39aldo39/Evolution-DecSync
+# wget -q https://github.com/39aldo39/Evolution-DecSync/releases/download/v2.1.0-2-evolution-3.44/libdecsync-v2.2.1.deb &&
+#   dpkg --install libdecsync-v2.2.1.deb &&
+#   rm libdecsync-v2.2.1.deb
+# echo $(evolution --version)
+# wget -q https://github.com/39aldo39/Evolution-DecSync/releases/download/v2.1.0-2-evolution-3.44/evolution-decsync-v2.1.0-evolution-3.44.deb &&
+#   dpkg --install evolution-decsync-v2.1.0-evolution-3.44.deb &&
+#   rm evolution-decsync-v2.1.0-evolution-3.44.deb
+
+###########################
 # Set environment variables
+###########################
 
 # tlp settings for battery optimization
+sudo sed 's/^ *# *DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE *= *[^ ]*/DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE="bluetooth"/' /etc/tlp.conf
+
 # battery charge thresholds
-sed 's/^ *# *START_CHARGE_THRESH_BAT0 *= *[^ ]*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
-sed 's/^ *# *STOP_CHARGE_THRESH_BAT0 *= *[^ ]*/STOP_CHARGE_THRESH_BAT0=85/' /etc/tlp.conf
+sudo sed 's/^ *# *START_CHARGE_THRESH_BAT0 *= *[^ ]*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
+sudo sed 's/^ *# *STOP_CHARGE_THRESH_BAT0 *= *[^ ]*/STOP_CHARGE_THRESH_BAT0=85/' /etc/tlp.conf
 
 # power profiles
-sed 's/^ *# *PLATFORM_PROFILE_ON_AC *= *[^ ]*/PLATFORM_PROFILE_ON_AC=performance/' /etc/tlp.conf
-sed 's/^ *# *PLATFORM_PROFILE_ON_BAT *= *[^ ]*/PLATFORM_PROFILE_ON_BAT=low-power/' /etc/tlp.conf
+sudo sed 's/^ *# *PLATFORM_PROFILE_ON_AC *= *[^ ]*/PLATFORM_PROFILE_ON_AC=performance/' /etc/tlp.conf
+sudo sed 's/^ *# *PLATFORM_PROFILE_ON_BAT *= *[^ ]*/PLATFORM_PROFILE_ON_BAT=low-power/' /etc/tlp.conf
 
-sed 's/^ *# *CPU_ENERGY_PERF_POLICY_ON_AC *= *[^ ]*/CPU_ENERGY_PERF_POLICY_ON_AC=performance/' /etc/tlp.conf
-sed 's/^ *# *CPU_ENERGY_PERF_POLICY_ON_BAT *= *[^ ]*/CPU_ENERGY_PERF_POLICY_ON_BAT=power/' /etc/tlp.conf
+sudo sed 's/^ *# *CPU_ENERGY_PERF_POLICY_ON_AC *= *[^ ]*/CPU_ENERGY_PERF_POLICY_ON_AC=performance/' /etc/tlp.conf
+sudo sed 's/^ *# *CPU_ENERGY_PERF_POLICY_ON_BAT *= *[^ ]*/CPU_ENERGY_PERF_POLICY_ON_BAT=power/' /etc/tlp.conf
 
-sed 's/^ *# *CPU_BOOST_ON_AC *= *[^ ]*/CPU_BOOST_ON_AC=1/' /etc/tlp.conf
-sed 's/^ *# *CPU_BOOST_ON_BAT *= *[^ ]*/CPU_BOOST_ON_BAT=0/' /etc/tlp.conf
+sudo sed 's/^ *# *CPU_BOOST_ON_AC *= *[^ ]*/CPU_BOOST_ON_AC=1/' /etc/tlp.conf
+sudo sed 's/^ *# *CPU_BOOST_ON_BAT *= *[^ ]*/CPU_BOOST_ON_BAT=0/' /etc/tlp.conf
 
 sudo tlp start
 
-# Install Miniconda
+# Disable wayland in favour of xorg
+if [ $XDG_SESSION_TYPE == "wayland" ]
+then
+  sudo sed -i '/WaylandEnable/s/^#//g' /etc/gdm3/custom.conf
+  sudo sed -i '/WaylandEnable=false/a\DefaultSession=gnome-xorg.desktop' /etc/gdm3/custom.conf
+  # sudo sed -i -nr '/^Xsession=*/!p;$a[User]\nXsession=gnome-xorg' /var/lib/AccountsService/users/{{ .chezmoi.username }}
+fi
+
+# Start syncthing on boot
+# sudo mv /usr/share/applications/syncthing-start.desktop {{ .chezmoi.homeDir }}/.config/autostart/
+# sudo systemctl start syncthing@{{ .chezmoi.username }}
+# sudo systemctl enable syncthing@{{ .chezmoi.username }}
+sudo systemctl --user daemon-reload
+sudo systemctl --user start syncthing.service
+sudo systemctl --user enable syncthing.service
+
+###################
+# Install miniconda
+###################
+
 if ! conda --version  
 then
   mkdir -p ~/miniconda3
   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/Downloads/Miniconda3-latest-Linux-x86_64.sh
   bash ~/Downloads/Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/miniconda3
   rm -rf ~/Downloads/Miniconda3-latest-Linux-x86_64.sh
-  echo 'export PATH=~/miniconda3/bin:$PATH' >> ~/.bash_profile
-  source ~/.bash_profile
+  echo 'export PATH=~/miniconda3/bin:$PATH' >> ~/.profile
+  source ~/.profile
 fi
 
 # Create conda system environment
