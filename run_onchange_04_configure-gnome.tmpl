@@ -47,9 +47,19 @@ autorun-never=true
 [org/gnome/calendar]
 active-view='month'
 
+[org/gnome/Contacts]
+did-initial-setup=true
+
+[org/gnome/clocks]
+world-clocks=[{'location': <(uint32 2, <('Amsterdam', 'EHAM', true, [(0.91280719879303418, 0.083194033496160544)], [(0.91367986341903151, 0.085812027374152042)])>)>}]
+
+[org/gnome/Weather]
+locations=[<(uint32 2, <('Hobart', 'YMHB', true, [(-0.74758269045314041, 2.5740697526652059)], [(-0.7490371431319971, 2.5714517587872145)])>)>]
+
 [apps/guake/general]
 start-at-login=true
 window-ontop=true
+window-height=35
 
 [apps/guake/keybindings/global]
 show-hide='<Primary>grave'
@@ -61,24 +71,8 @@ show-hide='<Primary>grave'
 ############################
 [org/gnome/shell]
 disable-user-extensions=false
-enabled-extensions=['dash-to-dock@micxgx.gmail.com',\
-'caffeine@patapon.info',\
-'sound-output-device-chooser@kgshank.net',\
-'drive-menu@gnome-shell-extensions.gcampax.github.com',\
-'places-menu@gnome-shell-extensions.gcampax.github.com',\
-'clipboard-indicator@tudmotu.com']
-favorite-apps=['brave-browser.desktop',\
-'codium.desktop',\
-'filezilla.desktop',\
-'firefox_firefox.desktop',\
-'org.gnome.Calculator.desktop',\
-'org.gnome.Contacts.desktop',\
-'org.gnome.Maps.desktop',\
-'org.gnome.Terminal.desktop',\
-'superproductivity_superproductivity.desktop',\
-'telegramdesktop.desktop',\
-'appimagekit-joplin.desktop',\
-'org.keepassxc.KeePassXC.desktop']
+enabled-extensions= [{{- range $index, $extension := .extensions.linux -}}{{if $index}}, {{end}}"{{ $extension }}"{{- end -}}]
+favorite-apps=[{{- range $index, $favourite := .favourites.linux -}}{{if $index}}, {{end}}"{{ $favourite }}"{{- end -}}]
 
 [org/gnome/shell/extensions/caffeine]
 user-enabled=true
